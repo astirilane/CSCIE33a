@@ -1,0 +1,46 @@
+body {
+    background-color: white;
+}
+
+.input, .button{
+    border-radius: 4px;
+    margin: 5px;
+ }
+
+ .advanced {
+    margin: 5px;
+    width: 100%;
+ }
+
+ .search {
+    width: 30%;
+    border-radius: 35px;
+    font-size: 30px;
+ }
+
+ .advanced_div {
+    margin-left: 20px;
+    margin-right: 20px;
+ }
+
+  .label, .to_do {
+    margin-bottom: 18px;
+  }
+
+  .advanced_search, .advanced_button {
+    text-align: end;
+  }
+
+  .advanced_button {
+    background-color: rgb(93, 130, 223);
+    color: white;
+    font-size: small;
+  }
+
+h5 {
+    color: rgb(200, 74, 74);
+}
+
+.search_div {
+   padding-top: 7%;
+}
