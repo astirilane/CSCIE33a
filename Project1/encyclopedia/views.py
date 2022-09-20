@@ -14,13 +14,21 @@ class NewEntryForm(forms.Form):
 
 
 # Index display page and search
+# Need to sort out capitalization issue!!
 def index(request):
     if request.method == "POST":
         search = request.POST['q']
-        return render(request, "encyclopedia/entry_data.html", {
-            "entry_data": markdown2.markdown(util.get_entry(search)),
-            "entry": search
-        })
+        if util.get_entry(search):
+            return render(request, "encyclopedia/entry_data.html", {
+                "entry_data": markdown2.markdown(util.get_entry(search)),
+                "entry": search
+            })
+        else:
+            entries = util.list_entries()
+            partials = [entry for entry in entries if search in entry]
+            return render(request, "encyclopedia/index.html", {
+                "entries": partials
+            })
     else:
         return render(request, "encyclopedia/index.html", {
             "entries": util.list_entries()
