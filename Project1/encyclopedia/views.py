@@ -30,7 +30,7 @@ def index(request):
 # Display searched wiki entry
 def entry_view(request, entry):
     if not util.get_entry(entry):
-        return render(request, "encyclopedia/not_found.html")
+        return render(request, "encyclopedia/error.html")
     else:
         return render(request, "encyclopedia/entry_data.html", {
             "entry_data": markdown2.markdown(util.get_entry(entry)),
@@ -45,11 +45,14 @@ def new_entry(request):
         if form.is_valid():
             name = form.cleaned_data["name"]
             entry_info = form.cleaned_data["entry_info"]
-            if util.get_entry(name) != None:
+            if util.get_entry(name):
+                dupe = True
                 util.save_entry(name, entry_info)
-                return render(request, "encyclopedia/not_found.html")
+                return render(request, "encyclopedia/error.html", {
+                    "dupe": dupe
+                })
         else:
-            return render(request, "encyclopedia/not_found.html")
+            return render(request, "encyclopedia/error.html")
     else:
         return render(request, "encyclopedia/new_entry.html", {
             "form": NewEntryForm

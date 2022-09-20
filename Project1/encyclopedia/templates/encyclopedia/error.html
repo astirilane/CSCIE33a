@@ -1,0 +1,13 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Entry Error
+{% endblock %}
+
+{% block body %}
+    {% if dupe %}
+        <h1>Error: Entry already exists</h1>
+    {% else %}
+        <h1>Error: Request not found in database</h1>
+    {% endif %}
+{% endblock %}
