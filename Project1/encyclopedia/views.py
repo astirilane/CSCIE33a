@@ -27,7 +27,7 @@ def index(request):
         })
 
 
-# Display searched wiki entry
+# Display searched wiki entry via direct / entry in URL bar
 def entry_view(request, entry):
     if not util.get_entry(entry):
         return render(request, "encyclopedia/error.html")
