@@ -25,4 +25,7 @@ def entry_view(request, entry):
             "entry_data": markdown2.markdown(util.get_entry(entry)),
             "entry": entry
     })
- 
+
+
+def new_entry(request):
+    return render(request, "encyclopedia/new_entry.html")
