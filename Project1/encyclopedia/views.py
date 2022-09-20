@@ -47,9 +47,14 @@ def new_entry(request):
             entry_info = form.cleaned_data["entry_info"]
             if util.get_entry(name):
                 dupe = True
-                util.save_entry(name, entry_info)
                 return render(request, "encyclopedia/error.html", {
                     "dupe": dupe
+                })
+            else:
+                util.save_entry(name, entry_info)
+                return render(request, "encyclopedia/entry_data.html", {
+                    "entry_data": markdown2.markdown(util.get_entry(name)),
+                    "entry": name
                 })
         else:
             return render(request, "encyclopedia/error.html")
