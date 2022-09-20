@@ -1,8 +1,13 @@
 from django.shortcuts import render
 import markdown2
-from django.template import RequestContext
+# from django.template import RequestContext
+from django import forms
 
 from . import util
+
+class NewEntryForm(forms.Form):
+    name = forms.CharField(label="New Entry Title")
+    entry_info = forms.CharField(widget=forms.Textarea, label="Wiki Entry Data")
 
 
 def index(request):
@@ -28,4 +33,6 @@ def entry_view(request, entry):
 
 
 def new_entry(request):
-    return render(request, "encyclopedia/new_entry.html")
+    return render(request, "encyclopedia/new_entry.html", {
+        "form": NewEntryForm
+    })
