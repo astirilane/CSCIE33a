@@ -3,6 +3,7 @@ from django.shortcuts import render
 import markdown2
 from django.template import RequestContext
 from django import forms
+from random import choice
 
 from . import util
 
@@ -72,3 +73,13 @@ def new_entry(request):
         return render(request, "encyclopedia/new_entry.html", {
             "form": NewEntryForm
         })
+
+
+# Generate a random entry for display
+def random(request):
+    entries = util.list_entries()
+    entry = choice(entries)
+    return render(request, "encyclopedia/entry_data.html", {
+        "entry_data": markdown2.markdown(util.get_entry(entry)),
+        "entry": entry
+    })
