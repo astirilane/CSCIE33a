@@ -16,12 +16,17 @@ class NewEntryForm(forms.Form):
 
 # Index display page and search
 def index(request):
+    # POST reqeust display
+    # Pull search query and find it among the entries to display
     if request.method == "POST":
         search = request.POST['q']
+        # Show entry data, and convert markdown syntax to HTML
         return render(request, "encyclopedia/entry_data.html", {
             "entry_data": markdown2.markdown(util.get_entry(search)),
             "entry": search
         })
+    # GET request display
+    # Display list of all entries
     else:
         return render(request, "encyclopedia/index.html", {
             "entries": util.list_entries()
@@ -30,8 +35,10 @@ def index(request):
 
 # Display searched wiki entry via direct / entry in URL bar
 def entry_view(request, entry):
+    # If there's no entry on this path then display error
     if not util.get_entry(entry):
         return render(request, "encyclopedia/error.html")
+    # Otherwise display the entry from the path
     else:
         return render(request, "encyclopedia/entry_data.html", {
             "entry_data": markdown2.markdown(util.get_entry(entry)),
@@ -41,6 +48,7 @@ def entry_view(request, entry):
 
 # Add a new wiki entry 
 def new_entry(request):
+    # POST request display
     if request.method == "POST":
         form = NewEntryForm(request.POST)
         if form.is_valid():
@@ -59,6 +67,8 @@ def new_entry(request):
                 })
         else:
             return render(request, "encyclopedia/error.html")
+    # GET request display
+    # Show form for new wiki entry
     else:
         return render(request, "encyclopedia/new_entry.html", {
             "form": NewEntryForm
